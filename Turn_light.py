@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 class Turn_Light(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
-        master.title("First GUI") #Controls the window title.
+        master.title("Light OUT(FIRST GUI)") #Controls the window title.
         master.geometry("350x350+200+200") #size
         self.pack()
         self.createWidgets()

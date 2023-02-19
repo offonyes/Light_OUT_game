@@ -82,7 +82,6 @@ class Turn_Light(tk.Frame):
                 self.count -=1
         if self.count == 25:
             self.game_over()
-        print(self.count)
     def game_over(self):
         showinfo("You won", "Congratulations you passed the game!")
         for i in range(1,26):

@@ -13,7 +13,7 @@ class Turn_Light(tk.Frame):
         text = tk.Label(self, text="LIGHT OUT",fg="Black",font=('Helvetica bold', 26))
         text.place(x=1,y= 20)
         self.move = 0
-        self.ran = ["OFF"]
+        self.ran = ["OFF","OFF"]
         self.Moves = tk.Button(self, text=f"Moves\n{self.move}",width=7,height=2,state="disabled")
         self.Moves.grid(row = 2, column = 7 ,padx=(25,0))
         self.count = 0
@@ -114,9 +114,9 @@ class Turn_Light(tk.Frame):
 
     def restart_program(self):
         if self.deff_c.get() ==  "Easy":
-            self.ran = ["OFF"]
+            self.ran = ["OFF","OFF"]
         elif self.deff_c.get() ==  "Hard":
-            self.ran.append("ON")
+            self.ran = ["OFF","OFF","ON"]
         self.move = 0
         self.Moves.config(text = f"Moves\n{self.move}")
         self.count = 0

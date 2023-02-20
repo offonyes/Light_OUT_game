@@ -55,12 +55,11 @@ class Turn_Light(tk.Frame):
             if self.buttons[i]["text"] == "OFF":
                 self.buttons[i]["bg"] = "Gray"
                 self.buttons[i]["fg"] = "White"
-            else: 
+            elif self.buttons[i]["text"] == "ON": 
                 self.buttons[i]["bg"] = "Yellow"
                 self.buttons[i]["fg"] = "Black"
-        self.diff_change()
-
-    def diff_change(self):
+                self.count +=1
+        print(self.count)
         if self.FirstStart == True:
             self.diff = ("Easy","Hard")
             self.deff_c = ttk.Combobox(self, values=self.diff, width=7,height=2)
@@ -104,6 +103,7 @@ class Turn_Light(tk.Frame):
                 self.buttons[i]['bg'] = 'Gray'
                 self.buttons[i]["fg"] = "White"
                 self.count -=1
+        print(self.count)
         if self.count == 25:
             self.game_over()
 
@@ -117,10 +117,10 @@ class Turn_Light(tk.Frame):
             self.ran = ["OFF"]
         elif self.deff_c.get() ==  "Hard":
             self.ran.append("ON")
-        self.createWidgets()
         self.move = 0
         self.Moves.config(text = f"Moves\n{self.move}")
         self.count = 0
+        self.createWidgets()
 if __name__ == "__main__":
     root = tk.Tk()
     app = Turn_Light(master=root)

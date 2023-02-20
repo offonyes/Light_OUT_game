@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter.messagebox import showinfo
 from PIL import Image, ImageTk
+import random
+from tkinter import ttk 
 
 class Turn_Light(tk.Frame):
     def __init__(self, master=None):
@@ -8,17 +10,19 @@ class Turn_Light(tk.Frame):
         master.title("First GUI") #Controls the window title.
         master.geometry("350x350+200+200") #size
         self.pack()
-        self.createWidgets()
         text = tk.Label(self, text="LIGHT OUT",fg="Black",font=('Helvetica bold', 26))
         text.place(x=1,y= 20)
         self.move = 0
+        self.ran = ["OFF"]
         self.Moves = tk.Button(self, text=f"Moves\n{self.move}",width=7,height=2,state="disabled")
         self.Moves.grid(row = 2, column = 7 ,padx=(25,0))
         self.count = 0
+        self.FirstStart = True
         master.resizable(False, False)
         icon_1 = Image.open("light_on\img.png")
         photo = ImageTk.PhotoImage(icon_1)
         root.wm_iconphoto(False, photo)
+        self.createWidgets()
 
     def createWidgets(self):
         floors = [i for i in range(1,26)]
@@ -32,21 +36,37 @@ class Turn_Light(tk.Frame):
                 xPos = xPos + 1
                 yPos = 0
             if (xPos == 0):
-                self.buttons[floor] = tk.Button(self, width=4,height=2,bg="Grey",fg= "White", text="OFF", 
+                self.buttons[floor] = tk.Button(self, width=4,height=2,text=random.choice(self.ran), 
                                                     command = lambda f=floor: self.pressed(f))
                 self.buttons[floor].grid(row=xPos, column =yPos,pady=(80,0))
                 e.append([xPos,yPos])
                 yPos = yPos +1
             else:
-                self.buttons[floor] = tk.Button(self, width=4,height=2,bg="Grey",fg= "White", text="OFF", 
+                self.buttons[floor] = tk.Button(self, width=4,height=2,text=random.choice(self.ran), 
                                                     command = lambda f=floor: self.pressed(f))
                 self.buttons[floor].grid(row=xPos, column =yPos)
                 e.append([xPos,yPos])
                 yPos = yPos +1
-        self.QUIT = tk.Button(self, text="QUIT", fg="red",
+        self.QUIT = tk.Button(self, text="QUIT", fg="Purple",
                     command=root.destroy,width=7,height=2).grid(row = 4, column = 7 ,padx=(25,0))
-        self.restart = tk.Button(self, text="RESTART", fg="red",
+        self.restart = tk.Button(self, text="RESTART", fg="Purple",
                     command=self.restart_program,width=7,height=2).grid(row =3, column = 7 ,padx=(25,0))
+        for i in range(1,26):
+            if self.buttons[i]["text"] == "OFF":
+                self.buttons[i]["bg"] = "Gray"
+                self.buttons[i]["fg"] = "White"
+            else: 
+                self.buttons[i]["bg"] = "Yellow"
+                self.buttons[i]["fg"] = "Black"
+        self.diff_change()
+
+    def diff_change(self):
+        if self.FirstStart == True:
+            self.diff = ("Easy","Hard")
+            self.deff_c = ttk.Combobox(self, values=self.diff, width=7,height=2)
+            self.deff_c.current(0)
+            self.deff_c.grid(row =1, column = 7 ,padx=(25,0))
+            self.FirstStart = False
 
     def pressed(self, button):
         self.move +=1
@@ -93,6 +113,10 @@ class Turn_Light(tk.Frame):
             self.buttons[i]["state"] = "disabled"
 
     def restart_program(self):
+        if self.deff_c.get() ==  "Easy":
+            self.ran = ["OFF"]
+        elif self.deff_c.get() ==  "Hard":
+            self.ran.append("ON")
         self.createWidgets()
         self.move = 0
         self.Moves.config(text = f"Moves\n{self.move}")

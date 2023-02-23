@@ -155,7 +155,6 @@ class Turn_Light(tk.Frame):
                 self.buttons[i]['bg'] = 'Gray'
                 self.buttons[i]["fg"] = "White"
                 self.count -=1
-        print(self.count)
         if self.count == Turn_Light.row*Turn_Light.column:
             self.game_over()
 
